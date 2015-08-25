@@ -1,0 +1,272 @@
+{
+  "name": "electron-react-boilerplate",
+  "version": "0.2.9",
+  "dependencies": {
+    "bluebird": {
+      "version": "2.9.34",
+      "from": "bluebird@*",
+      "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.9.34.tgz"
+    },
+    "debug": {
+      "version": "2.2.0",
+      "from": "debug@>=2.2.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/debug/-/debug-2.2.0.tgz",
+      "dependencies": {
+        "ms": {
+          "version": "0.7.1",
+          "from": "ms@0.7.1",
+          "resolved": "https://registry.npmjs.org/ms/-/ms-0.7.1.tgz"
+        }
+      }
+    },
+    "electron-debug": {
+      "version": "0.1.1",
+      "from": "electron-debug@>=0.1.1 <0.2.0",
+      "resolved": "https://registry.npmjs.org/electron-debug/-/electron-debug-0.1.1.tgz"
+    },
+    "flux": {
+      "version": "2.1.1",
+      "from": "flux@>=2.0.3 <3.0.0",
+      "resolved": "https://registry.npmjs.org/flux/-/flux-2.1.1.tgz",
+      "dependencies": {
+        "fbemitter": {
+          "version": "2.0.0",
+          "from": "fbemitter@>=2.0.0 <3.0.0",
+          "resolved": "https://registry.npmjs.org/fbemitter/-/fbemitter-2.0.0.tgz"
+        },
+        "fbjs": {
+          "version": "0.1.0-alpha.7",
+          "from": "fbjs@0.1.0-alpha.7",
+          "resolved": "https://registry.npmjs.org/fbjs/-/fbjs-0.1.0-alpha.7.tgz",
+          "dependencies": {
+            "core-js": {
+              "version": "1.1.0",
+              "from": "core-js@>=1.0.0 <2.0.0",
+              "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.1.0.tgz"
+            },
+            "promise": {
+              "version": "7.0.4",
+              "from": "promise@>=7.0.3 <8.0.0",
+              "resolved": "https://registry.npmjs.org/promise/-/promise-7.0.4.tgz",
+              "dependencies": {
+                "asap": {
+                  "version": "2.0.3",
+                  "from": "asap@>=2.0.3 <2.1.0",
+                  "resolved": "https://registry.npmjs.org/asap/-/asap-2.0.3.tgz"
+                }
+              }
+            },
+            "whatwg-fetch": {
+              "version": "0.9.0",
+              "from": "whatwg-fetch@>=0.9.0 <0.10.0",
+              "resolved": "https://registry.npmjs.org/whatwg-fetch/-/whatwg-fetch-0.9.0.tgz"
+            }
+          }
+        },
+        "immutable": {
+          "version": "3.7.4",
+          "from": "immutable@>=3.7.4 <4.0.0",
+          "resolved": "https://registry.npmjs.org/immutable/-/immutable-3.7.4.tgz"
+        }
+      }
+    },
+    "keepass.io": {
+      "version": "1.1.3",
+      "from": "keepass.io@*",
+      "resolved": "https://registry.npmjs.org/keepass.io/-/keepass.io-1.1.3.tgz",
+      "dependencies": {
+        "dejavu": {
+          "version": "0.4.8",
+          "from": "dejavu@>=0.4.8 <0.5.0",
+          "resolved": "https://registry.npmjs.org/dejavu/-/dejavu-0.4.8.tgz",
+          "dependencies": {
+            "amdefine": {
+              "version": "0.1.1",
+              "from": "amdefine@>=0.1.0 <0.2.0",
+              "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-0.1.1.tgz"
+            },
+            "mout": {
+              "version": "0.9.1",
+              "from": "mout@>=0.9.1 <0.10.0",
+              "resolved": "https://registry.npmjs.org/mout/-/mout-0.9.1.tgz"
+            }
+          }
+        },
+        "async": {
+          "version": "1.3.0",
+          "from": "async@>=1.3.0 <1.4.0",
+          "resolved": "https://registry.npmjs.org/async/-/async-1.3.0.tgz"
+        },
+        "xml2js": {
+          "version": "0.4.10",
+          "from": "xml2js@>=0.4.9 <0.5.0",
+          "resolved": "https://registry.npmjs.org/xml2js/-/xml2js-0.4.10.tgz",
+          "dependencies": {
+            "sax": {
+              "version": "1.1.1",
+              "from": "sax@>=0.6.0",
+              "resolved": "https://registry.npmjs.org/sax/-/sax-1.1.1.tgz"
+            },
+            "xmlbuilder": {
+              "version": "2.6.4",
+              "from": "xmlbuilder@>=2.4.6",
+              "resolved": "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-2.6.4.tgz",
+              "dependencies": {
+                "lodash": {
+                  "version": "3.10.1",
+                  "from": "lodash@>=3.5.0 <4.0.0",
+                  "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
+                }
+              }
+            }
+          }
+        },
+        "nan": {
+          "version": "1.8.4",
+          "from": "nan@>=1.8.4 <1.9.0",
+          "resolved": "https://registry.npmjs.org/nan/-/nan-1.8.4.tgz"
+        }
+      }
+    },
+    "keymirror": {
+      "version": "0.1.1",
+      "from": "keymirror@>=0.1.1 <0.2.0",
+      "resolved": "https://registry.npmjs.org/keymirror/-/keymirror-0.1.1.tgz"
+    },
+    "object-assign": {
+      "version": "2.1.1",
+      "from": "object-assign@>=2.0.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-2.1.1.tgz"
+    },
+    "react": {
+      "version": "0.13.3",
+      "from": "react@>=0.13.3 <0.14.0",
+      "resolved": "https://registry.npmjs.org/react/-/react-0.13.3.tgz",
+      "dependencies": {
+        "envify": {
+          "version": "3.4.0",
+          "from": "envify@>=3.0.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/envify/-/envify-3.4.0.tgz",
+          "dependencies": {
+            "through": {
+              "version": "2.3.8",
+              "from": "through@>=2.3.4 <2.4.0",
+              "resolved": "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
+            },
+            "jstransform": {
+              "version": "10.1.0",
+              "from": "jstransform@>=10.0.1 <11.0.0",
+              "resolved": "https://registry.npmjs.org/jstransform/-/jstransform-10.1.0.tgz",
+              "dependencies": {
+                "base62": {
+                  "version": "0.1.1",
+                  "from": "base62@0.1.1",
+                  "resolved": "https://registry.npmjs.org/base62/-/base62-0.1.1.tgz"
+                },
+                "esprima-fb": {
+                  "version": "13001.1001.0-dev-harmony-fb",
+                  "from": "esprima-fb@13001.1001.0-dev-harmony-fb",
+                  "resolved": "https://registry.npmjs.org/esprima-fb/-/esprima-fb-13001.1001.0-dev-harmony-fb.tgz"
+                },
+                "source-map": {
+                  "version": "0.1.31",
+                  "from": "source-map@0.1.31",
+                  "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.31.tgz",
+                  "dependencies": {
+                    "amdefine": {
+                      "version": "1.0.0",
+                      "from": "amdefine@>=0.0.4",
+                      "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.0.tgz"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "react-redux": {
+      "version": "0.9.0",
+      "from": "react-redux@*",
+      "resolved": "https://registry.npmjs.org/react-redux/-/react-redux-0.9.0.tgz",
+      "dependencies": {
+        "invariant": {
+          "version": "2.1.0",
+          "from": "invariant@>=2.0.0 <3.0.0",
+          "resolved": "https://registry.npmjs.org/invariant/-/invariant-2.1.0.tgz",
+          "dependencies": {
+            "envify": {
+              "version": "3.4.0",
+              "from": "envify@>=3.0.0 <4.0.0",
+              "resolved": "https://registry.npmjs.org/envify/-/envify-3.4.0.tgz",
+              "dependencies": {
+                "through": {
+                  "version": "2.3.8",
+                  "from": "through@>=2.3.4 <2.4.0",
+                  "resolved": "https://registry.npmjs.org/through/-/through-2.3.8.tgz"
+                },
+                "jstransform": {
+                  "version": "10.1.0",
+                  "from": "jstransform@>=10.0.1 <11.0.0",
+                  "resolved": "https://registry.npmjs.org/jstransform/-/jstransform-10.1.0.tgz",
+                  "dependencies": {
+                    "base62": {
+                      "version": "0.1.1",
+                      "from": "base62@0.1.1",
+                      "resolved": "https://registry.npmjs.org/base62/-/base62-0.1.1.tgz"
+                    },
+                    "esprima-fb": {
+                      "version": "13001.1001.0-dev-harmony-fb",
+                      "from": "esprima-fb@13001.1001.0-dev-harmony-fb",
+                      "resolved": "https://registry.npmjs.org/esprima-fb/-/esprima-fb-13001.1001.0-dev-harmony-fb.tgz"
+                    },
+                    "source-map": {
+                      "version": "0.1.31",
+                      "from": "source-map@0.1.31",
+                      "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.31.tgz",
+                      "dependencies": {
+                        "amdefine": {
+                          "version": "1.0.0",
+                          "from": "amdefine@>=0.0.4",
+                          "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.0.tgz"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "react-router": {
+      "version": "0.13.3",
+      "from": "react-router@>=0.13.3 <0.14.0",
+      "resolved": "https://registry.npmjs.org/react-router/-/react-router-0.13.3.tgz",
+      "dependencies": {
+        "qs": {
+          "version": "2.4.1",
+          "from": "qs@2.4.1",
+          "resolved": "https://registry.npmjs.org/qs/-/qs-2.4.1.tgz"
+        }
+      }
+    },
+    "redux": {
+      "version": "1.0.1",
+      "from": "redux@*",
+      "resolved": "https://registry.npmjs.org/redux/-/redux-1.0.1.tgz"
+    },
+    "redux-logger": {
+      "version": "0.0.3",
+      "from": "redux-logger@*",
+      "resolved": "https://registry.npmjs.org/redux-logger/-/redux-logger-0.0.3.tgz"
+    },
+    "redux-thunk": {
+      "version": "0.1.0",
+      "from": "redux-thunk@*",
+      "resolved": "https://registry.npmjs.org/redux-thunk/-/redux-thunk-0.1.0.tgz"
+    }
+  }
+}
