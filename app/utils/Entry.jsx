@@ -3,7 +3,7 @@ import { Map, List, Iterable } from 'immutable';
 export const defaultFields = List(['Title', 'UserName', 'Password', 'URL', 'Notes']);
 
 export function getFields(entry) {
-    return entry.get('String').map(field => field.get('Key'));
+    return entry.get('String', List()).map(field => field.get('Key'));
 }
 
 export function getPathForUUID(root, uuid) {
@@ -20,7 +20,8 @@ export function getPathForUUID(root, uuid) {
         return acc;
     }
 
-    return getPath(List(), root).shift();
+    const path = getPath(List(), root).shift();
+    return path.isEmpty() ? null : path;
 }
 
 export function getPathForFieldValue(entry, fieldName) {
@@ -37,4 +38,8 @@ export function getPathForFieldValue(entry, fieldName) {
 
 export function getEntryFieldValue(entry, fieldName, defaultValue) {
     return entry.getIn(getPathForFieldValue(entry, fieldName)) || defaultValue;
-};
+}
+
+export function getEntryTitle(entry) {
+    return getEntryFieldValue(entry, 'Title', '*no title*')
+}

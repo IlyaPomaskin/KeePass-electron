@@ -1,92 +1,97 @@
-import React, { cloneElement, findDOMNode } from 'react';
-import { getPathForUUID, getEntryFieldValue, getPathForFieldValue, getFields, defaultFields } from '../utils/Entry';
+import React, { findDOMNode } from 'react';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { openFieldModal, closeEntryModal, MODAL_TYPE_ENTRY } from '../actions/AppActions';
+import { saveEntry, removeEntry } from '../actions/DbActions';
+import * as KeePass from '../utils/KeePass.jsx';
+import { getEntryTitle, getPathForUUID, getEntryFieldValue, getPathForFieldValue, getFields, defaultFields } from '../utils/Entry';
+
+import InlineEdit from 'react-inline-edit';
 import { Map } from 'immutable';
-import merge from 'lodash/object/merge';
+import Modal from './Modal';
+import FormRow from './FormRow';
+import FieldName from './FieldName';
 
-export default class EntryModal extends React.Component {
-    constructor() {
-        super();
-        document.addEventListener('keydown', this.onKeyDown);
+class EntryModal extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            entry: this.props.entry,
+            editableField: null,
+            title: getEntryTitle(this.props.entry)
+        };
     }
 
-    componentWillReceiveProps(newProps) {
+    componentWillReceiveProps(nextProps) {
         this.setState({
-            entry: newProps.entry
-        })
+            title: getEntryTitle(nextProps.entry)
+        });
     }
 
-    componentWillUnmount() {
-        document.removeEventListener('keydown', this.onKeyDown);
+    UNNAMED_FIELD = "Unnamed field";
+
+    getCustomFieldName(fieldName = this.UNNAMED_FIELD) {
+        if (fieldName === "") {
+            fieldName = fieldName || this.UNNAMED_FIELD;
+        }
+
+        const fields = getFields(this.state.entry)
+            .filter(field => defaultFields.indexOf(field) === -1)
+            .filter(field => field.indexOf(fieldName) === 0);
+
+        var getFreeFieldName = (iteration = 1) => {
+            const nextFieldName = fieldName + (iteration === 1 ? '' : ' #' + iteration);
+            return !fields.contains(nextFieldName) ? nextFieldName : getFreeFieldName(iteration + 1);
+        };
+
+        return getFreeFieldName();
     }
 
     onAddCustomField = () => {
-        // TODO check for duplicates and append suffix to fieldName
-        // FIXME use fieldName entered by user or make it editable
-        const fieldId = getFields(this.state.entry)
-            .filterNot(field => defaultFields.indexOf(field) > -1)
-            .count();
-        const fieldName = `*FIXME* ${fieldId + 1}`;
-        if (fieldName) {
-            this.setState({
-                entry: this.state.entry.update(
-                    'String',
-                    fields => fields.push(Map({ Key: fieldName, Value: '' }))
-                )
-            });
-        }
-    }
+        this.setState({
+            entry: this.state.entry.update('String', fields => fields.push(Map({
+                Key: this.getCustomFieldName(),
+                Value: ''
+            })))
+        });
+    };
 
     onSaveClick = () => {
-        const newEntry = this.state.entry.update((entry) => {
+        const entry = this.state.entry.update(entry => {
             const getPath = (field) => getPathForFieldValue(entry, field);
-            const getValue = (field) => findDOMNode(this.refs[field]).value;
+            const getValue = (field) => findDOMNode(this.refs[field].refs['input']).value;
             return getFields(entry).reduce((acc, item) => {
                 return acc.setIn(getPath(item), getValue(item));
             }, entry);
-        })
+        });
 
-        this.props.saveEntry(newEntry);
-    }
+        this.props.saveEntry(entry, this.props.isNew);
+    };
 
     onDeleteClick = () => {
-        if (confirm(`Delete ${getEntryFieldValue(this.props.entry, 'Title', '*no title*')} ?`)) {
+        if (confirm(`Delete ${this.state.title} ?`)) {
             this.props.removeEntry(this.props.entry.get('UUID'));
             this.props.closeEntryModal();
         }
-    }
-
-    onKeyDown = (e) => {
-        if (e.which === 27) {
-            this.props.closeEntryModal();
-        }
-    }
-
-    renderInput = (key, field, label = field, input) => {
-        var newInput = input || <input type="text" />;
-        const newProps = {
-            defaultValue: getEntryFieldValue(this.state.entry, field),
-            ref: field,
-            className: 'uk-form-width-large'
-        };
-        newInput = cloneElement(newInput, merge({}, newInput.props, newProps));
-
-        return <div key={key} className="uk-form-row">
-            <label className="uk-form-label">{label}</label>
-            <div className="uk-form-controls">
-                {newInput}
-            </div>
-        </div>
-    }
+    };
 
     renderDefaultFields() {
         return defaultFields.map((field, key) => {
+            const commonProps = {
+                defaultValue: getEntryFieldValue(this.state.entry, field),
+                field: field,
+                key: key,
+                ref: field
+            };
             switch (field) {
                 case 'UserName':
-                    return this.renderInput(key, field, 'Username');
+                    return <FormRow {...commonProps} label="Username"/>;
                 case 'Notes':
-                    return this.renderInput(key, field, field, <textarea rows="3"></textarea>);
+                    const TextArea = <textarea rows="3"></textarea>;
+                    return <FormRow {...commonProps} input={TextArea} />;
                 default:
-                    return this.renderInput(key, field);
+                    return <FormRow {...commonProps} />;
             }
         })
     }
@@ -94,43 +99,73 @@ export default class EntryModal extends React.Component {
     renderCustomFields() {
         return getFields(this.state.entry)
             .filterNot(field => defaultFields.indexOf(field) > -1)
-            .map((field, key) => this.renderInput(key, field));
+            .map((field, key) => {
+                var onApply = (newValue) => {
+                    const path = getPathForFieldValue(this.state.entry, field).pop().push('Key');
+                    this.setState({
+                        entry: this.state.entry.setIn(path, this.getCustomFieldName(newValue)),
+                        editableField: null
+                    });
+                };
+
+                const FieldNameLabel = <div onDoubleClick={() => this.setState({editableField: key})}>{field}</div>;
+                const FieldNameInput = <FieldName saveOnBlur={true} onApply={onApply} defaultValue={field}/>;
+
+                const commonProps = {
+                    defaultValue: getEntryFieldValue(this.state.entry, field),
+                    field: field,
+                    key: key,
+                    ref: field
+                };
+                return <FormRow {...commonProps} label={this.state.editableField === key ? FieldNameInput : FieldNameLabel}/>;
+            })
     }
 
     render() {
-        if (!this.props.isEntryModalShown) {
-            return null;
-        }
+        const buttons = [
+            <button key="delete"
+                    className="uk-button uk-button-danger uk-margin-small-right"
+                    onClick={this.onDeleteClick}>
+                Delete
+            </button>,
+            <button key="save"
+                    className="uk-button uk-button-primary uk-margin-small-right"
+                    onClick={this.onSaveClick}>
+                Save
+            </button>
+        ];
 
-        return <div className="uk-modal uk-open" style={{display: 'block', overflowY: 'auto'}}>
-			<div className="uk-modal-dialog" onKeyDown={this.onKeyDown}>
-                <div className="uk-modal-header">
-                    <h3>
-                        {getEntryFieldValue(this.props.entry, 'Title', '*no title*')}
-                        <a className="uk-modal-close uk-close uk-float-right" onClick={this.props.closeEntryModal}></a>
-                    </h3>
-                </div>
+        return <Modal header={this.state.title} footer={buttons} closeModal={this.props.closeEntryModal}>
+            <h4>Default fields</h4>
+            {this.renderDefaultFields()}
 
-                <div className="uk-form uk-form-horizontal uk-margin-top">
-                    <h4>Default fields</h4>
-                    {this.renderDefaultFields()}
+            <hr />
 
-                    <hr />
+            <h4>Custom fields</h4>
+            {this.renderCustomFields()}
 
-                    <h4>Custom fields</h4>
-                    {this.renderCustomFields()}
+            <div className="uk-form-row">
+                <button className="uk-button uk-float-right" onClick={this.onAddCustomField}>
+                    New field
+                </button>
+            </div>
+        </Modal>;
+    }
+}
 
-                    <div className="uk-form-row">
-                        <button className="uk-button uk-float-right" onClick={this.onAddCustomField}>New field</button>
-                    </div>
-                </div>
-
-                <div className="uk-modal-footer uk-text-right">
-                    <button className="uk-button uk-button-danger uk-margin-small-right" onClick={this.onDeleteClick}>Delete</button>
-                    <button className="uk-button uk-button-primary uk-margin-small-right" onClick={this.onSaveClick}>Save</button>
-                    <button className="uk-button" onClick={this.props.closeEntryModal}>Close</button>
-                </div>
-	        </div>
-		</div>
-	}
-};
+export default connect(
+    (state) => {
+        const uuid = state.app.getIn(['modals', MODAL_TYPE_ENTRY, 'uuid']);
+        const path = getPathForUUID(state.db, uuid);
+        return {
+            isNew: path === null,
+            entry: path === null ? KeePass.createEntry() : state.db.getIn(path)
+        };
+    },
+    {
+        openFieldModal,
+        closeEntryModal,
+        saveEntry,
+        removeEntry
+    }
+)(EntryModal)

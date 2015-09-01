@@ -1,9 +1,9 @@
 body {
-	-webkit-user-select: none;
+    -webkit-user-select: none;
 }
 
 .open-file-container {
-	width: 250px;
+    width: 250px;
 }
 
 table.app-fixed {
@@ -16,30 +16,30 @@ table.app-fixed {
 }
 
 td {
-	/*-webkit-user-select: auto;*/
+    /*-webkit-user-select: auto;*/
 }
 
 .app-column-id {
-	width: 15px;
+    width: 15px;
 }
 
-.app-group-tree>ul {
-	padding: 0;
+.app-group-tree > ul {
+    padding: 0;
 }
 
-.uk-nav-sub>li>a {
-	padding: 3px 5px;
+.uk-nav-sub > li > a {
+    padding: 3px 5px;
 }
 
-.uk-nav-sub>li>a>i {
-	line-height: 20px;
-	padding: 0 3px;
+.uk-nav-sub > li > a > i {
+    line-height: 20px;
+    padding: 0 3px;
 }
 
-.uk-nav-side ul>.uk-active>a:hover {
-   color: #fff;
+.uk-nav-side ul > .uk-active > a:hover {
+    color: #fff;
 }
 
 .uk-nav-side ul a:hover {
-   color: #07d;
+    color: #07d;
 }

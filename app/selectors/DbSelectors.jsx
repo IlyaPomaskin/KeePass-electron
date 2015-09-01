@@ -1,7 +1,7 @@
 import { Map, List, Iterable } from 'immutable';
 import { getPathForUUID } from '../utils/Entry';
 
-function groupsReduce(acc = List(), item) {
+function groupsReduce(acc = List(), item = Map()) {
     if (item.isEmpty()) {
         return acc;
     }
@@ -22,9 +22,9 @@ function groupsReduce(acc = List(), item) {
 
 export function groupsSelector(root = Map()) {
     return groupsReduce(List(), root).get(0);
-};
+}
 
 export function entriesSelector(root, selectedGroup) {
     const path = getPathForUUID(root, selectedGroup);
-    return root.getIn(path).get('Entry', List());
+    return path === null ? List() : root.getIn(path).get('Entry', List());
 }

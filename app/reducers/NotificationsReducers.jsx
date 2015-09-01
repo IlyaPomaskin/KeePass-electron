@@ -7,17 +7,17 @@ const Notification = Record({
     timeout: null,
     id: null,
     message: 'Empty :('
-})
+});
 
-export default function app(state = initialNotificationsState, action) {
-	switch (action.type) {
-		case NotificationsActions.CREATE_NOTIFICATION:
-			return state.push(new Notification({
+export default function app(state = initialNotificationsState, action = {}) {
+    switch (action.type) {
+        case NotificationsActions.CREATE_NOTIFICATION:
+            return state.push(new Notification({
                 timeout: action.timeout,
                 id: action.id,
                 message: action.message
             }));
-		case NotificationsActions.CLOSE_NOTIFICATION:
+        case NotificationsActions.CLOSE_NOTIFICATION:
             const notificationIndex = state.findIndex(notification => notification.get('id') === action.id);
             if (notificationIndex !== -1) {
                 clearTimeout(state.getIn([notificationIndex, 'timeout']));
@@ -25,7 +25,7 @@ export default function app(state = initialNotificationsState, action) {
             } else {
                 return state;
             }
-		default:
-			return state;
-	}
+        default:
+            return state;
+    }
 }

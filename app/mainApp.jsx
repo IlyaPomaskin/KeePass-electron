@@ -28,16 +28,16 @@ const store = configureStore();
 window.location.hash = "/open";
 
 React.render(
-	<Provider store={store}>
-		{() => <Router history={history}>
-		<Route path="/" component={AppContainer}>
-			<Route path="new" component={NewPageContainer} />
-			<Route path="open" component={OpenPageContainer} />
-			<Route path="save" component={SavePageContainer} />
-			<Route path="db" component={DbPageContainer} />
-			<Route path="*" component={NotFoundPage} />
-		</Route>
-	</Router>}
-	</Provider>,
-	document.getElementById('react-root')
+    <Provider store={store}>
+        {() => <Router history={history}>
+            <Route path="/" component={AppContainer}>
+                <Route path="new" component={NewPageContainer}/>
+                <Route path="open" component={OpenPageContainer}/>
+                <Route path="save" component={SavePageContainer}/>
+                <Route path="db" component={DbPageContainer}/>
+                <Route path="*" component={NotFoundPage}/>
+            </Route>
+        </Router>}
+    </Provider>,
+    document.getElementById('react-root')
 );
