@@ -155,7 +155,12 @@ module.exports = function(opts) {
   }
 
   var nodeModules = fs.readdirSync('node_modules').filter(function(x) {
-    return x !== '.bin' && x !== 'react' && x !== 'react-router' && x !== 'react-redux' && x !== 'redux-react-router';
+    return x !== '.bin'
+        && x !== 'react'
+        && x !== 'react-router'
+        && x !== 'react-redux'
+        && x !== 'redux-react-router'
+        && x !== 'react-inline-edit';
   });
 
   var electronModules = [
